@@ -10,15 +10,16 @@ import (
 	"github.com/labstack/echo"
 )
 
-type Config struct {
-	Url int `json:"url"`
+// WebConfig is setup web server
+type WebConfig struct {
+	URL int `json:"url"`
 }
 
-func (c Config) toString() string {
-	return toJson(c)
+func (c WebConfig) toString() string {
+	return toJSON(c)
 }
 
-func toJson(p interface{}) string {
+func toJSON(p interface{}) string {
 	bytes, err := json.Marshal(p)
 	if err != nil {
 		fmt.Println(err.Error())
@@ -40,14 +41,14 @@ func main() {
 	e.Logger.Fatal(e.Start(":39268"))
 }
 
-func getConfig() Config {
+func getConfig() WebConfig {
 	raw, err := ioutil.ReadFile("./config.json")
 	if err != nil {
 		fmt.Println(err.Error())
 		os.Exit(1)
 	}
 
-	var c Config
+	var c WebConfig
 	json.Unmarshal(raw, &c)
 	return c
 }
